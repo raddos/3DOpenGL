@@ -1,0 +1,4 @@
+﻿  Test.cpp
+C:\Users\Windows10 Home\Desktop\3DOpenGLWorld\OpenWorld3D\OpenGLGraphics\src\Test.cpp(35,61): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Windows10 Home\Desktop\3DOpenGLWorld\OpenWorld3D\OpenGLGraphics\src\Test.cpp(42,59): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+  OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Desktop\3DOpenGLWorld\OpenWorld3D\x64\Debug\OpenGLGraphics.exe
