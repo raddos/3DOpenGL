@@ -65,7 +65,7 @@ public:
 class CubeObject : public Object
 {
 protected:
-
+	//for filelocation
 	const char* shaderFilepath;
 	const char* textureFilepath;
 	//Shape
@@ -95,7 +95,7 @@ public:
 		InitAttributes();
 		InitDefaultParameters();
 		UnbindAll();
-		std::cout << initcounter(1) << std::endl;
+		std::cout << initcounter(1) << std::endl; /// !!! how 72 ????????
 
 	}
 	~CubeObject()
@@ -210,26 +210,52 @@ class Terrain {
 private:
 	const char* shaderFilepath;
 	const char* textureFilepath;
+	int xSize;
+    int zSize;
 protected:
 
 	CubeObject* cube;
 	
 	std::vector<CubeObject*> cubes;
+
 public:
 
 	Terrain(const char* shaderFilepath,
-		const char* textureFilepath) :shaderFilepath(shaderFilepath), textureFilepath(textureFilepath) {
+		const char* textureFilepath,
+		int xSize,int zSize ) :shaderFilepath(shaderFilepath), textureFilepath(textureFilepath) ,zSize(zSize),xSize(xSize)
+	{
 		Init();
+		
 	};
 
+	~Terrain() {
+		for (auto* cube : cubes) {
+			delete cube;
+		}
+		this->cubes.empty();
+	}
+
 	void Init() {
-		for (float i = -1 ; i<1; i+=0.5) {
-			cube = new CubeObject(shaderFilepath, textureFilepath);
-			cube->TranslateMatrixLeftAndRight(i);
-			cubes.push_back(cube);
+
+		int posX = this->xSize / 2;
+		int negX = -(this->xSize / 2);
+		int posZ = this->zSize / 2;
+		int negZ = -(this->zSize / 2);
+
+		for (int i = negX ; i < xSize ; i +=1) 
+		{
+			for (int j = negZ; j < zSize ; j+=1 ) {
+				this->cube = new CubeObject(this->shaderFilepath, this->textureFilepath);
+				this->cube->TranslateMatrixLeftAndRight((float)i);
+				this->cube->TranslateMatrixNearAndFar((float)j);
+				this->cube->TranslateMatrixUpAndDown((float)-1.f);
+				cubes.push_back(cube);
+
+			}
 		}
 
 	}
+
 	void Render() {
 		for (auto cube : cubes) 
 		{

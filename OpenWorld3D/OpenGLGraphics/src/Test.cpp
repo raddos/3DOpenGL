@@ -4,11 +4,6 @@
 #include "Sound.h"
 #include "Gui.h"
 
-void inputs(GLFWwindow* window, glm::vec3& position, glm::vec3& rotation, glm::vec3& scale);
-
-
-std::pair<double, double> getCursorPosition(GLFWwindow* window);
-
 Test::Test() 
 {
 
@@ -32,9 +27,7 @@ void Test::Play() const
 		Renderer Renderer;
 
 
-		Terrain* ter = new Terrain(shaderFilepath, textureFilepath);
-
-
+		Terrain* ter = new Terrain(shaderFilepath, textureFilepath, 4,8);
 
 
 		//Gui
@@ -48,24 +41,17 @@ void Test::Play() const
 			//Update
 			glfwPollEvents();
 			GUI.Update();
-
-		
-
+			ter->Update();
 			//Input
 			win.processInputForWindow();
 			//Player Input
 
-
-
-		
-
 			//Rendering commands here
 			Renderer.Clear();
-			
+			//Terrain
 			ter->Render();
-			
+			//Gui
 			GUI.Render();
-
 			// check and call events and swap the buffers
 			win.swapBuffers();
 		}
@@ -74,52 +60,3 @@ void Test::Play() const
 		win.Shutdown();
 }
 
-
-void inputs(GLFWwindow* window, glm::vec3& position, glm::vec3& rotation, glm::vec3& scale)
-{
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		position.z = -0.01f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		position.z = 0.01f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		position.x = -0.01f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		position.x = 0.01f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-	{
-		rotation.z = 0.5f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-	{
-		rotation.z = -0.5f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-	{
-		scale.x = 0.1f;
-		scale.y = 0.1f;
-		scale.z = 0.1f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-	{
-		scale.x = 0.1f;
-		scale.y = 0.1f;
-		scale.z = 0.1f;
-	}
-
-}
-
-std::pair<double,double> getCursorPosition(GLFWwindow* window) {
-
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
-	double xpos, ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-	return std::pair < double,double> (xpos, ypos);
-}
