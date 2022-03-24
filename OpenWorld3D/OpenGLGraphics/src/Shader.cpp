@@ -5,12 +5,15 @@
 #include <fstream>
 #include <string>
 #include <sstream> 
+#include <glm/gtc/type_ptr.hpp>
+
 
 Shader::Shader(const std::string& filepath):rendererID(0),filepath(filepath)
 {
 	
 	ShaderProgramSource source = ParseShader(filepath);
 	rendererID = CreateShader(source.VertexSource, source.FragmentSource);
+	GLCall(glUseProgram(rendererID));
 
 }
 
@@ -39,11 +42,8 @@ void Shader::SetUniform1i(const std::string& name, int value)
 }
 
 void Shader::SetUniformMat4f(const std::string& name,const glm::mat4 matrix) 
-{	//location 
-	//how many matrixes
-	//glm stores as collom major no need to transope matrix 
-	//pointer for that point array of matrix
-	GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+{	
+	GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
 void Shader::SetUniform3fv(const std::string& name, float  *val)
