@@ -23,6 +23,8 @@ unsigned int* Primitive::getIndices() { return this->indices.data(); }
 const size_t Primitive::getNumberOfVertices() { return this->vertices.size(); }
 const size_t Primitive::getNumberOfIndices() { return this->indices.size(); }
 
+void Primitive::Print() { };
+
 Quad::Quad() : Primitive() 
 {
 	//vertex data for square front
@@ -96,7 +98,7 @@ Pyramid::Pyramid(): Primitive()
 	};
 	unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
-	this->set(vertices, nrOfVertices, nullptr, 0);
+	this->set(vertices, nrOfVertices, nullptr, 1);
 }
 	
 Pyramid::~Pyramid() {};

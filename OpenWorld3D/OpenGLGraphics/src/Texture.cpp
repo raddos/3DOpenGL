@@ -31,7 +31,7 @@ Texture::~Texture()
 	GLCall(glDeleteTextures(1, &rendererID));
 }
 
-void Texture::Bind()const 
+void Texture::BindTextureSlot()const 
 {
 	GLCall(glActiveTexture(GL_TEXTURE0));
 	GLCall(glBindTexture(GL_TEXTURE_2D, rendererID));
