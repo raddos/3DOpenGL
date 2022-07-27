@@ -4,6 +4,7 @@
 #include "Sound.h"
 #include "Gui.h"
 #include "Window.h"
+#include <filesystem>
 
 void playerInput(GLFWwindow* win, CubeObject* cube);
 
@@ -21,36 +22,26 @@ void Test::Play() const
 {
 	//Windows
 	Window win;
+	Renderer* renderer = new Renderer();
+
+
 
 	//sound
 	Sound s;
 	s.testSound();
-	const char* textureFilepath = "res/textures/Texture_Dirt.jpg";
-	const char* textureFilepathPlayer = "res/textures/PunyKnight.png";
-	const char* shaderFilepathForTerrain = "res/shaders/cube.shader";
-	const char* shaderFilepathForPlayer = "res/shaders/player.shader";
-	Renderer* renderer = new Renderer();
-
-	Texture tex(textureFilepathPlayer);
-	//Texture for terrain
-
-	Texture tx(textureFilepath);
-	tx.BindTextureSlot();
 
 
-	Terrain* ter = new Terrain(shaderFilepathForTerrain, 12,12);
 
-	CubeObject* player = new CubeObject(shaderFilepathForPlayer);
-	player->setPlayer();
-
-	Primitive* p = new Circle();
-
-	VertexArray vao;
-	VertexBuffer vb(p->getNumberOfVertices(), p->getVertices());
-	vao.AddBuffer(vb);
-	IndexBuffer ib(p->getNumberOfIndices(), p->getIndices());
-
-	//Gui
+	//Object 1 
+	Texture tex("res/textures/AnimeGirl.png");
+	tex.BindTextureSlot();
+	CubeObject* cubeObject = new CubeObject("res/shaders/Cube.shader");
+	cubeObject->SetTexture("uniformTexture", 0);
+	//gui
+	Texture texture2("res/textures/SwordImage.png");
+	texture2.BindTextureSlot();
+	CubeObject* cubeObject2 = new CubeObject("res/shaders/Sword.shader");
+	cubeObject2->SetTexture("SwordUniformTexture",1);
 	Gui GUI;
 	GUI.Init(win.getWindowsPointer());
 
@@ -61,21 +52,15 @@ void Test::Play() const
 		//Update
 		glfwPollEvents();
 		GUI.Update();
-		ter->Update();
-		player->Update();
 		//Input
 		win.processInputForWindow();
 		//Player Input
-		playerInput(win.getWindowsPointer(), player);
+	    playerInput(win.getWindowsPointer(), cubeObject);
 		//Rendering commands here
 		renderer->Clear();
-		//Terrain
-		ter->Render(renderer);
-		player->Render(renderer);
-		renderer->Draw(vao,ib,Shader(shaderFilepathForTerrain));
-		//Gui
+		cubeObject->Render(renderer);
+	  	cubeObject2->Render(renderer);
 		GUI.Render();
-		// check and call events and swap the buffers
 		win.swapBuffers();
 	}
 
@@ -95,5 +80,7 @@ void playerInput(GLFWwindow* win,CubeObject * cube) {
 		cube->TranslateMatrixLeftAndRight(-0.1f);
 	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
 		cube->TranslateMatrixLeftAndRight(+0.1f);
+
+	
 }
 

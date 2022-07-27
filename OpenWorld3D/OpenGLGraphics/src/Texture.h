@@ -15,9 +15,8 @@ public:
 	Texture(const std::string& filepath);
 	~Texture();
 
-	void Bind()const;
-	void Unbind()const; 
-
+	void BindTextureSlot() const;
+	void UnbindTextureSlot()const; 
 
 	inline int GetWidth()const { return width; };
 	inline int GetHeight()const { return height; };

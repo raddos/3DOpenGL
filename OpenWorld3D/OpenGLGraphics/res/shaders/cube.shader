@@ -1,5 +1,5 @@
 #shader vertex
-#version 440 core  
+#version 450 core  
 
 layout(location = 0) in vec3 position;  
 layout(location = 1) in vec3 colorcoord;
@@ -27,7 +27,7 @@ void main()
 };
 
 #shader fragment
-#version 440 core  
+#version 450 core  
 
 layout(location = 0) out vec4 color;
 
@@ -36,8 +36,8 @@ in vec3 vertex_color;
 in vec2 vertex_texcoord;
 in vec3 vertex_normal;
 
-uniform vec4 uniformColor;
 uniform sampler2D uniformTexture;
+uniform sampler2D SwordUniformTexture;
 uniform vec3 lightPos;
 uniform vec3 camPosition;
 
@@ -63,6 +63,6 @@ void main()
 
 	//Texture light
 	color = texture(uniformTexture, vertex_texcoord) * vec4(vertex_color, 1.f) *
-	(vec4(darkAmbientColor, 1.f)+vec4(diffuseColor,1.f)+vec4(specularLight,1.f)); //lights
+		(vec4(darkAmbientColor, 1.f) + vec4(diffuseColor, 1.f) + vec4(specularLight, 1.f)); //lights
 	
 };

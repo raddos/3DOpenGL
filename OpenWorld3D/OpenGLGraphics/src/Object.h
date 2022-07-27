@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+#include <iostream>
 
 glm::mat4 ModelMatrix() {
 	// Attributes
@@ -22,10 +23,10 @@ glm::mat4 ModelMatrix() {
 	// Indentity matrix needed for manipulation
 	glm::mat4 modelMatrix(1.f);
 	modelMatrix = glm::translate(modelMatrix, position);
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, -4.f));
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, 0.f));
 
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(35.f), glm::vec3(1.0f, 0.0f, 0.0f));
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(10.f), glm::vec3(0.0f, 1.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(1.0f, 0.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));
 	modelMatrix = glm::scale(modelMatrix, scale);
 	return modelMatrix;
@@ -62,7 +63,6 @@ public:
 	virtual void InitAttributes() {}
 };
 
-
 class CubeObject : public Object
 {
 protected:
@@ -71,7 +71,7 @@ protected:
 	//Shape
 	Primitive* cube;
 	//Basic attributes
-	Shader* shader = new Shader(shaderFilepath);
+	Shader* shader; 
 	Renderer* renderer;
 	VertexArray* va;
 	VertexBuffer* vb;
@@ -82,18 +82,12 @@ protected:
 	glm::mat4 viewMatrix = ViewMatrix();
 	glm::mat4 perpectiveProj = PerspectiveProj();
 
-
-	static int initcounter(int x) {
-		static int k = 0;
-		k += x;
-		return k;
-	};
-
 public:
 
 	bool setPlay;
 
-	CubeObject(const char* shaderFilepath) :Object(), shaderFilepath(shaderFilepath){
+	CubeObject(const char* shaderFilepath) :Object(), shaderFilepath(shaderFilepath)
+	{
 		this->setPlay = false;
 		InitAttributes();
 		InitDefaultParameters();
@@ -112,11 +106,14 @@ public:
 	}
 
 	virtual void InitAttributes() {
+		shader = new Shader(shaderFilepath);
+		shader->Bind();
 		this->cube = new Cube();
 		this->va = new VertexArray(); // vertex array object
 		vb = new VertexBuffer(cube->getNumberOfVertices(), cube->getVertices());  // buffer vertices data 
 		va->AddBuffer(*this->vb); // adding to pointers to data
 		ib = new IndexBuffer(cube->getNumberOfIndices(), cube->getIndices()); // given idices 
+		shader->Unbind();
 
 	}
 	void Render(Renderer * renderer) {
@@ -167,12 +164,17 @@ public:
 		shader->Unbind();
 	};
 
+	void SetTexture(std::string TextureUniformName,const int &value){
+		shader->Bind();
+		shader->SetUniform1i(TextureUniformName,value);
+		shader->Unbind();
+	}
 
 private:
 
 	void InitDefaultParameters() {
 
-
+		shader->Bind();
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->SetUniformMat4f("u_ViewMatrix", viewMatrix);
 		shader->SetUniformMat4f("u_PerspectiveProjection", perpectiveProj);
@@ -182,11 +184,11 @@ private:
 
 		shader->SetUniform3fv("lightPos", glm::value_ptr(lightPos));
 		shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
-
-		shader->SetUniform1i("uniformTexture", 0);
-
+		shader->Unbind();
 	}
 
+
+public:
 	void UnbindAll() {
 		va->Unbind();
 		vb->Unbind();
@@ -201,126 +203,4 @@ private:
 		shader->Bind();
 	}
 
-};
-
-class Terrain {
-private:
-	const char* shaderFilepath;
-	int xSize;
-	int zSize;
-protected:
-
-	CubeObject* cube;
-
-	std::vector<CubeObject*> cubes;
-
-public:
-
-	Terrain(const char* shaderFilepath,
-		int xSize, int zSize) :shaderFilepath(shaderFilepath), zSize(zSize), xSize(xSize)
-	{
-		Init();
-
-	};
-
-	~Terrain() {
-		for (auto* cube : cubes) {
-			delete cube;
-		}
-		this->cubes.empty();
-	}
-
-	void Init() {
-
-		int posX = this->xSize / 2;
-		int negX = -(this->xSize / 2);
-		int posZ = this->zSize / 2;
-		int negZ = -(this->zSize / 2);
-
-		for (int i = negX; i < xSize; i += 1)
-		{
-			for (int j = negZ; j < zSize; j += 1) {
-				this->cube = new CubeObject(this->shaderFilepath);
-				this->cube->TranslateMatrixLeftAndRight((float)i);
-				this->cube->TranslateMatrixNearAndFar((float)j);
-				this->cube->TranslateMatrixUpAndDown((float)-1.f);
-				cubes.push_back(cube);
-
-			}
-		}
-
-	}
-
-	void Render(Renderer * renderer) {
-		for (auto cube : cubes)
-		{
-			cube->Render(renderer);
-		}
-	}
-	void Update() {
-
-	}
-};
-
-
-
-class Coins
-{
-
-private:
-	const char* shaderFilepath;
-	int xSize;
-	int zSize;
-protected:
-
-	CubeObject* cube;
-
-	std::vector<CubeObject*> cubes;
-
-public:
-
-	Coins(const char* shaderFilepath,
-		int xSize, int zSize) :shaderFilepath(shaderFilepath), zSize(zSize), xSize(xSize)
-	{
-		Init();
-
-	};
-
-	~Coins() {
-		for (auto* cube : cubes) {
-			delete cube;
-		}
-		this->cubes.empty();
-	}
-
-	void Init() {
-
-		int posX = this->xSize / 2;
-		int negX = -(this->xSize / 2);
-		int posZ = this->zSize / 2;
-		int negZ = -(this->zSize / 2);
-
-		for (int i = negX; i < xSize; i += 1)
-		{
-			for (int j = negZ; j < zSize; j += 1) {
-				this->cube = new CubeObject(this->shaderFilepath);
-				this->cube->TranslateMatrixLeftAndRight((float)i);
-				this->cube->TranslateMatrixNearAndFar((float)j);
-				this->cube->TranslateMatrixUpAndDown((float)1.f);
-				cubes.push_back(cube);
-
-			}
-		}
-
-	}
-
-	void Render(Renderer* renderer) {
-		for (auto cube : cubes)
-		{
-			cube->Render(renderer);
-		}
-	}
-	void Update() {
-
-	}
 };

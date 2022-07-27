@@ -107,7 +107,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\Sword.shader" />
     <None Include="src\Helper\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -525,6 +525,7 @@
     <None Include="src\Helper\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="res\shaders\Cube.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1476,6 +1477,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gmsrc\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
