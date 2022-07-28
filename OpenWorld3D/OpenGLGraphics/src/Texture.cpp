@@ -3,7 +3,7 @@
 #include "stb_image/stb_image.h"
 
 
-static int textureSlots = 1;
+static int textureSlots = 0;
 
 Texture::Texture(const std::string& filepath):filepath(filepath),localBuffer(nullptr),width(0),height(0),bitsPerPixel(0)
 {

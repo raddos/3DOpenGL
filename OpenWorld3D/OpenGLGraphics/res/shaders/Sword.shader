@@ -36,8 +36,11 @@ in vec3 vertex_color;
 in vec2 vertex_texcoord;
 in vec3 vertex_normal;
 
+// IMPORTANT PART
+
 uniform sampler2D uniformTexture;
 uniform sampler2D SwordUniformTexture;
+
 uniform vec3 lightPos;
 uniform vec3 camPosition;
 
@@ -60,7 +63,7 @@ void main()
 	float specularConstat = pow(max(dot(positionToViewDirection, reflectNormalizedDirectionVec), 0), 30);//higher the pow higher the range
 	vec3 specularLight = lightColor * specularConstat;
 
-
+	//Error?
 	//Texture light
 	color = texture(SwordUniformTexture, vertex_texcoord) * vec4(vertex_color, 1.f) *
 	(vec4(darkAmbientColor, 1.f)+vec4(diffuseColor,1.f)+vec4(specularLight,1.f)); //lights

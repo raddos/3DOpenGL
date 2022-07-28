@@ -33,15 +33,16 @@ void Test::Play() const
 
 
 	//Object 1 
-	Texture tex("res/textures/AnimeGirl.png");
+	Texture tex("res/textures/Te.png");
 	tex.BindTextureSlot();
 	CubeObject* cubeObject = new CubeObject("res/shaders/Cube.shader");
 	cubeObject->SetTexture("uniformTexture", 0);
-	//gui
+	//Object 2
 	Texture texture2("res/textures/SwordImage.png");
 	texture2.BindTextureSlot();
 	CubeObject* cubeObject2 = new CubeObject("res/shaders/Sword.shader");
 	cubeObject2->SetTexture("SwordUniformTexture",1);
+	//Gui
 	Gui GUI;
 	GUI.Init(win.getWindowsPointer());
 
@@ -80,7 +81,5 @@ void playerInput(GLFWwindow* win,CubeObject * cube) {
 		cube->TranslateMatrixLeftAndRight(-0.1f);
 	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
 		cube->TranslateMatrixLeftAndRight(+0.1f);
-
-	
 }
 

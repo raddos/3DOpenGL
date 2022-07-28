@@ -37,7 +37,7 @@ in vec2 vertex_texcoord;
 in vec3 vertex_normal;
 
 uniform sampler2D uniformTexture;
-uniform sampler2D SwordUniformTexture;
+
 uniform vec3 lightPos;
 uniform vec3 camPosition;
 

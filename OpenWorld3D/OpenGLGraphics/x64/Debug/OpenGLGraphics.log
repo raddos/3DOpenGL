@@ -1,1 +1,5 @@
-﻿  OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\x64\Debug\OpenGLGraphics.exe
+﻿  Test.cpp
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(113,1): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(115,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+  The contents of <filesystem> are available only with C++17 or later.
+  OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\x64\Debug\OpenGLGraphics.exe
