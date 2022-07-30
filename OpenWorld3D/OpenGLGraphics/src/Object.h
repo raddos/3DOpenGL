@@ -169,7 +169,11 @@ public:
 		shader->SetUniform1i(TextureUniformName,value);
 		shader->Unbind();
 	}
-
+	std::string GetTexture() {
+		std::string name;
+		shader->Bind();
+		return name;
+	}
 private:
 
 	void InitDefaultParameters() {

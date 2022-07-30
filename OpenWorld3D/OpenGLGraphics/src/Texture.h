@@ -16,6 +16,7 @@ public:
 	~Texture();
 
 	void BindTextureSlot() const;
+
 	void UnbindTextureSlot()const; 
 
 	inline int GetWidth()const { return width; };

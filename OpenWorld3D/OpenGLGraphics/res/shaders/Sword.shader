@@ -38,8 +38,7 @@ in vec3 vertex_normal;
 
 // IMPORTANT PART
 
-uniform sampler2D uniformTexture;
-uniform sampler2D SwordUniformTexture;
+layout(binding = 0) uniform sampler2D uniformTexture;
 
 uniform vec3 lightPos;
 uniform vec3 camPosition;
@@ -65,7 +64,7 @@ void main()
 
 	//Error?
 	//Texture light
-	color = texture(SwordUniformTexture, vertex_texcoord) * vec4(vertex_color, 1.f) *
+	color = texture(uniformTexture, vertex_texcoord) * vec4(vertex_color, 1.f) *
 	(vec4(darkAmbientColor, 1.f)+vec4(diffuseColor,1.f)+vec4(specularLight,1.f)); //lights
 	
 };

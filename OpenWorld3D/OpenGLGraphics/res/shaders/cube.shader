@@ -1,7 +1,7 @@
 #shader vertex
-#version 450 core  
+#version 450 core
 
-layout(location = 0) in vec3 position;  
+layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 colorcoord;
 layout(location = 2) in vec2 texcoord;
 layout(location = 3) in vec3 normal;
@@ -16,8 +16,8 @@ uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_PerspectiveProjection;
 
-void main()  
-{  
+void main()
+{
 	vertex_position = vec4(u_ModelMatrix * vec4(position, 1.f)).xyz;
 	vertex_color = colorcoord;
 	vertex_texcoord = texcoord;
@@ -27,7 +27,7 @@ void main()
 };
 
 #shader fragment
-#version 450 core  
+#version 450 core
 
 layout(location = 0) out vec4 color;
 
@@ -36,7 +36,10 @@ in vec3 vertex_color;
 in vec2 vertex_texcoord;
 in vec3 vertex_normal;
 
+// IMPORTANT PART
+
 uniform sampler2D uniformTexture;
+
 
 uniform vec3 lightPos;
 uniform vec3 camPosition;
@@ -54,15 +57,15 @@ void main()
 	vec3 diffuseColor = lightColor * diffuse;
 
 	//Specular light
-	vec3 lightToPositionNormalizedDirectionVec = normalize(vertex_position -lightPos);
+	vec3 lightToPositionNormalizedDirectionVec = normalize(vertex_position - lightPos);
 	vec3 reflectNormalizedDirectionVec = normalize(reflect(lightToPositionNormalizedDirectionVec, normalize(vertex_normal)));
-	vec3 positionToViewDirection = normalize(camPosition- vertex_position);
+	vec3 positionToViewDirection = normalize(camPosition - vertex_position);
 	float specularConstat = pow(max(dot(positionToViewDirection, reflectNormalizedDirectionVec), 0), 30);//higher the pow higher the range
 	vec3 specularLight = lightColor * specularConstat;
 
-
+	//Error?
 	//Texture light
-	color = texture(uniformTexture, vertex_texcoord) * vec4(vertex_color, 1.f) *
+	color = texture(uniformTexture, vertex_texcoord) * vec4(vertex_color/2, 1.f) *
 		(vec4(darkAmbientColor, 1.f) + vec4(diffuseColor, 1.f) + vec4(specularLight, 1.f)); //lights
-	
+
 };
