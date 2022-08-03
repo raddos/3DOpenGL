@@ -28,6 +28,9 @@ void VertexArray::AddBuffer(const VertexBuffer& vb)
 	GLCall(glEnableVertexAttribArray(2));
 	GLCall(glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal)));
 	GLCall(glEnableVertexAttribArray(3));
+
+	vb.Unbind();
+	this->Unbind();
 	
 }
 

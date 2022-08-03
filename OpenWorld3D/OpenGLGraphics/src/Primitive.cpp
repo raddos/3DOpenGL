@@ -31,10 +31,10 @@ Quad::Quad() : Primitive()
 	Vertex vertices[] =
 	{
 		// positon						//color						//texture				//normals
-		glm::vec3(-0.5f, -0.5f, 0.0f),	glm::vec3(1.f,0.0f,0.0f),	 glm::vec2(0.f,0.f),    glm::vec3(0.f,0.0f, 1.0f),
-		glm::vec3(0.5f, -0.5f, 0.0f),	glm::vec3(0.f,1.0f,0.0f),	 glm::vec2(1.f,0.f),	glm::vec3(0.f,0.0f, 1.0f),
-		glm::vec3(0.5f,  0.5f, 0.0f),	glm::vec3(0.0f,0.0f,1.0f),	 glm::vec2(1.f,1.f),    glm::vec3(0.0f,0.0f,1.0f),
-		glm::vec3(-0.5f,  0.5f,0.0f),	glm::vec3(0.3f,0.5f,0.2f),	 glm::vec2(0.0f,1.0f),	glm::vec3(0.0f,0.0f, 1.0f),
+		glm::vec3(-0.5f, -0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(0.f,0.f),    glm::vec3(0.f,0.0f, 1.0f),
+		glm::vec3(0.5f, -0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(1.f,0.f),	glm::vec3(0.f,0.0f, 1.0f),
+		glm::vec3(0.5f,  0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(1.f,1.f),    glm::vec3(0.0f,0.0f,1.0f),
+		glm::vec3(-0.5f,  0.5f,0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(0.0f,1.0f),	glm::vec3(0.0f,0.0f, 1.0f),
 	};
 	//bottom side
 	//dots indexing ccl for squere
@@ -55,10 +55,10 @@ Triangle::Triangle() : Primitive() {
 	Vertex vertices[] =
 	{
 	// positon						//color						//texture				//normals
-	glm::vec3(-0.5f, -0.5f, 0.0f),	glm::vec3(1.f,0.0f,0.0f),	 glm::vec2(0.f,0.f),    glm::vec3(0.f,0.0f, 1.0f),
-	glm::vec3(0.5f, -0.5f, 0.0f),	glm::vec3(0.f,1.0f,0.0f),	 glm::vec2(1.f,0.f),	glm::vec3(0.f,0.0f, 1.0f),
-	glm::vec3(0.5f,  0.5f, 0.0f),	glm::vec3(0.0f,0.0f,1.0f),	 glm::vec2(1.f,1.f),    glm::vec3(0.0f,0.0f,1.0f),
-	glm::vec3(-0.5f,  0.5f,0.0f),	glm::vec3(0.3f,0.5f,0.2f),	 glm::vec2(0.0f,1.0f),	glm::vec3(0.0f,0.0f, 1.0f),
+	glm::vec3(-0.5f, -0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(0.f,0.f),    glm::vec3(0.f,0.0f, 1.0f),
+	glm::vec3(0.5f, -0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(1.f,0.f),	glm::vec3(0.f,0.0f, 1.0f),
+	glm::vec3(0.5f,  0.5f, 0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(1.f,1.f),    glm::vec3(0.0f,0.0f,1.0f),
+	glm::vec3(-0.5f,  0.5f,0.0f),	glm::vec3(0.f,0.0f,0.0f),	 glm::vec2(0.0f,1.0f),	glm::vec3(0.0f,0.0f, 1.0f),
 	};
 	//bottom side
 	//dots indexing ccl for squere
@@ -110,35 +110,35 @@ Cube::Cube() : Primitive()
 	Vertex vertices[] =
 	{
 		//Position front 0,1,2,3				//Color							//Texcoords					//Normals
-		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
 		//Position Back
-		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, -1.f),
-		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, -1.f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, -1.f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, -1.f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, -1.f),
 		//Positon left	
-		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(-1.f, 0.f, 0.f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(-1.f, 0.f, 0.f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(-1.f, 0.f, 0.f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(-1.f, 0.f, 0.f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(-1.f, 0.f, 0.f),
 		//Positon right
-		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(1.f, 0.f, 0.f),
-		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(1.f, 0.f, 0.f),
-		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(1.f, 0.f, 0.f),
-		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(1.f, 0.f, 0.f),
+		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(1.f, 0.f, 0.f),
 		//Position up
-		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 1.f, 0.f),
-		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 1.f, 0.f),
-		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 1.f, 0.f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 1.f, 0.f),
 		//Position down
-		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, -1.f, 0.f),
-		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, -1.f, 0.f),
-		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, -1.f, 0.f),
-		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, -1.f, 0.f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, -1.f, 0.f),
 
 	};
 	unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);

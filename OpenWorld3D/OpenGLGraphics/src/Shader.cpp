@@ -41,7 +41,7 @@ void Shader::SetUniform1i(const std::string& name, int value)
 	GLCall(glUniform1i(GetUniformLocation(name), value));
 }
 
-void Shader::SetUniformMat4f(const std::string& name,glm::mat4 matrix) 
+void Shader::SetUniformMat4f(const std::string& name,const glm::mat4 matrix) 
 {	
 	GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }
@@ -141,9 +141,10 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 		if (line.find("#shader") != std::string::npos)
 		{
 			if (line.find("vertex") != std::string::npos)
+			{
 				//set vertex mode
 				type = ShaderType::VERTEX;
-			
+			}
 			else if (line.find("fragment") != std::string::npos)
 				//set fragment mode
 				type = ShaderType::FRAGMENT;

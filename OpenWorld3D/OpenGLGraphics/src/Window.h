@@ -17,16 +17,15 @@ public:
 
 	void Shutdown();
 
-	void setViewPort() {
-		//viewport where we render pixels in window
-		glViewport(0, 0, windows_width, windows_height);
-	}
+	void setViewPort();
 
 	void initGlad();
 
 	void printStatistcs();
 
 	static inline void frameBufferSizeCallBack(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height);}
+
+
 
 	void processInputForWindow();
 

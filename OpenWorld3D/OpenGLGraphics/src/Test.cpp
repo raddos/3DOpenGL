@@ -4,9 +4,8 @@
 #include "Sound.h"
 #include "Gui.h"
 #include "Window.h"
-#include <filesystem>
 
-void playerInput(GLFWwindow* win, CubeObject* cube,CubeObject* cube2);
+void playerInput(GLFWwindow* win, CubeObject* cube);
 
 Test::Test() 
 {
@@ -22,27 +21,27 @@ void Test::Play() const
 {
 	//Windows
 	Window win;
-	Renderer* renderer = new Renderer();
+
 	//sound
 	Sound s;
 	s.testSound();
-	//Object 1 
-	Texture texture1("res/textures/TextureDirt.png");
-	texture1.BindTextureSlot();
-	CubeObject* cubeObject1 = new CubeObject("res/shaders/Sword.shader");
-	cubeObject1->SetTexture("uniformTexture", 0);
+	Renderer renderer;
+
+	//Terrain init
+	Shader *terrainShader=new Shader("res/shaders/terrain.shader");
+	TerrainMesh* terrain = new TerrainMesh(terrainShader, 8, 8,0);
+	Texture terrainTexture("res/textures/TextureDirt.jpg");
+	//Player init 
+	Shader *playerShader= new Shader("res/shaders/player.shader");
+	CubeObject* player= new CubeObject(playerShader, 1);
+	Texture playerTexture("res/textures/SwordImage.png");
+
+
+	//Binding textures
+	terrainTexture.BindTextureSlot();
+	playerTexture.BindTextureSlot();
 	
-	//Object 2
-	Texture texture2("res/textures/SwordImage.png");
-	texture2.BindTextureSlot();
-	CubeObject* cubeObject2 = new CubeObject("res/shaders/Cube.shader");
-	cubeObject2->SetTexture("uniformTexture", 0);
-	
-	//Object 3
-	 Texture texture3("res/textures/TextureDirt.png");
-	texture3.BindTextureSlot();
-	CubeObject* cubeObject3 = new CubeObject("res/shaders/Sword.shader");
-	cubeObject3->SetTexture("uniformTexture", 0);
+
 	//Gui
 	Gui GUI;
 	GUI.Init(win.getWindowsPointer());
@@ -57,15 +56,26 @@ void Test::Play() const
 		//Input
 		win.processInputForWindow();
 		//Player Input
-	    playerInput(win.getWindowsPointer(), cubeObject1,cubeObject2);
+		playerInput(win.getWindowsPointer(), player);
+
+
 		//Rendering commands here
-		renderer->Clear();
-		cubeObject1->Render(renderer);
-	  	cubeObject2->Render(renderer);
-		cubeObject3->Render(renderer);
+		renderer.Clear();
+		//Terrain & SkyBox
+		terrain->Draw(&renderer);
 		
 
+		//Player & Coins
+		player->Draw(&renderer);
+
+
+
+		//Enemies & Score
+		
+		
+		//Gui
 		GUI.Render();
+		
 		win.swapBuffers();
 	}
 
@@ -74,7 +84,8 @@ void Test::Play() const
 	return ;
 }
 
-void playerInput(GLFWwindow* win,CubeObject * cube, CubeObject* cube2) {
+
+void playerInput(GLFWwindow* win,CubeObject * cube) {
 	if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS) {
 		cube->TranslateMatrixNearAndFar(-0.1f);
 	}
@@ -84,8 +95,7 @@ void playerInput(GLFWwindow* win,CubeObject * cube, CubeObject* cube2) {
 		cube->TranslateMatrixLeftAndRight(-0.1f);
 	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
 		cube->TranslateMatrixLeftAndRight(+0.1f);
-	if (glfwGetKey(win, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		cube2->TranslateMatrixLeftAndRight(-0.05f);
-	}
+	if (glfwGetKey(win, GLFW_KEY_Z) == GLFW_PRESS)
+		delete[] cube;
 }
 

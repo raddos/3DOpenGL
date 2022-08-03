@@ -10,47 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
-
-#include <iostream>
-
-glm::mat4 ModelMatrix() {
-	// Attributes
-	glm::vec3 position(0.f);
-	glm::vec3 refposition(0.f);
-	glm::vec3 rotation(0.f);
-	glm::vec3 scale(1.f);
-	//setting matrix ( INNIT )
-	// Indentity matrix needed for manipulation
-	glm::mat4 modelMatrix(1.f);
-	modelMatrix = glm::translate(modelMatrix, position);
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, 0.f));
-
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(1.0f, 0.0f, 0.0f));
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));
-	modelMatrix = glm::scale(modelMatrix, scale);
-	return modelMatrix;
-}
-
-glm::mat4 ViewMatrix() {
-	//Camera
-	glm::mat4 ViewMatrix(1.f);
-	glm::vec3 camPosition(0.f, 0.0f, 2.f);
-	glm::vec3 lookUpWorld(0.f, 1.0f, 0.0f);
-	glm::vec3 camFront(0.0f, 0.0, -1.f);
-	ViewMatrix = glm::lookAt(camPosition, camPosition + camFront, lookUpWorld);
-	return ViewMatrix;
-}
-
-glm::mat4 PerspectiveProj() {
-	//Projection for 3d
-	glm::mat4 perspectiveProj(1.0f);
-	float FOV = 90.f;
-	float nearPlane = 0.1f;
-	float farPlane = 1000.f;
-	perspectiveProj = glm::perspective(glm::radians(FOV), static_cast<float>(1280) / 720, nearPlane, farPlane);
-	return perspectiveProj;
-}
+#include "MyMatrix.h"
 
 
 class Object {
@@ -63,6 +23,8 @@ public:
 	virtual void InitAttributes() {}
 };
 
+
+
 class CubeObject : public Object
 {
 protected:
@@ -71,7 +33,7 @@ protected:
 	//Shape
 	Primitive* cube;
 	//Basic attributes
-	Shader* shader; 
+	Shader* shader;
 	Renderer* renderer;
 	VertexArray* va;
 	VertexBuffer* vb;
@@ -82,41 +44,43 @@ protected:
 	glm::mat4 viewMatrix = ViewMatrix();
 	glm::mat4 perpectiveProj = PerspectiveProj();
 
+
+
 public:
+	static int initcounter() {
+		static int k = 0;
+		k += 1;
+		return k;
+	};
 
 	bool setPlay;
 
-	CubeObject(const char* shaderFilepath) :Object(), shaderFilepath(shaderFilepath)
-	{
+	CubeObject(Shader * shader,int textureSlot) :Object(), shader(shader){
+		initcounter();
 		this->setPlay = false;
 		InitAttributes();
-		InitDefaultParameters();
+		InitDefaultParameters(textureSlot);
 		UnbindAll();
-
 	}
 	~CubeObject()
 	{
-		delete shader;
-		delete renderer;
 		delete va;
 		delete vb;
 		delete ib;
 		delete cube;
+		delete shader;
 		delete shaderFilepath;
 	}
 
 	virtual void InitAttributes() {
-		shader = new Shader(shaderFilepath);
-		shader->Bind();
 		this->cube = new Cube();
 		this->va = new VertexArray(); // vertex array object
 		vb = new VertexBuffer(cube->getNumberOfVertices(), cube->getVertices());  // buffer vertices data 
 		va->AddBuffer(*this->vb); // adding to pointers to data
 		ib = new IndexBuffer(cube->getNumberOfIndices(), cube->getIndices()); // given idices 
-		shader->Unbind();
 
 	}
-	void Render(Renderer * renderer) {
+	void Draw(Renderer * renderer) {
 
 		renderer->Draw(*this->va, *this->ib, *this->shader);
 
@@ -137,7 +101,6 @@ public:
 		TranslateMatrixLeftAndRight(0.f);
 		TranslateMatrixNearAndFar(-2.f);
 		TranslateMatrixUpAndDown(0.f);
-		std::cout << to_string(this->modelMatrix);
 	}
 	
 	//between -1 and +1
@@ -164,35 +127,7 @@ public:
 		shader->Unbind();
 	};
 
-	void SetTexture(std::string TextureUniformName,const int &value){
-		shader->Bind();
-		shader->SetUniform1i(TextureUniformName,value);
-		shader->Unbind();
-	}
-	std::string GetTexture() {
-		std::string name;
-		shader->Bind();
-		return name;
-	}
-private:
 
-	void InitDefaultParameters() {
-
-		shader->Bind();
-		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
-		shader->SetUniformMat4f("u_ViewMatrix", viewMatrix);
-		shader->SetUniformMat4f("u_PerspectiveProjection", perpectiveProj);
-
-		glm::vec3 lightPos(0.f, 0.f, 2.f);
-		glm::vec3 camPosition(0.f, 0.0f, 1.f);
-
-		shader->SetUniform3fv("lightPos", glm::value_ptr(lightPos));
-		shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
-		shader->Unbind();
-	}
-
-
-public:
 	void UnbindAll() {
 		va->Unbind();
 		vb->Unbind();
@@ -206,5 +141,95 @@ public:
 		ib->Bind();
 		shader->Bind();
 	}
+private:
+
+	void InitDefaultParameters(int textureSlot) {
+
+		shader->Bind();
+		std::cout << to_string(modelMatrix);
+		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
+		shader->SetUniformMat4f("u_ViewMatrix", viewMatrix);
+		shader->SetUniformMat4f("u_PerspectiveProjection", perpectiveProj);
+
+		glm::vec3 lightPos(0.f, 0.f, 2.f);
+		glm::vec3 camPosition(0.f, 0.0f, 1.f);
+
+		shader->SetUniform3fv("lightPos", glm::value_ptr(lightPos));
+		shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
+
+		//adds to shader
+		shader->SetUniform1i("uniformTexture", textureSlot);
+		shader->Unbind();
+	}
+
 
 };
+
+class TerrainMesh {
+private:
+	Shader* shader;
+	int xSize;
+	int zSize;
+protected:
+
+	CubeObject* cube;
+	int textureSlot;
+	std::vector<CubeObject*> cubes;
+
+public:
+
+	TerrainMesh(Shader * shader,
+		int xSize, int zSize,int textureSlot) :shader(shader), zSize(zSize), xSize(xSize),textureSlot(textureSlot)
+	{
+		Init();
+
+	};
+
+	~TerrainMesh() {
+		for (auto* cube : cubes) {
+			delete cube;
+		}
+		this->cubes.empty();
+	}
+
+	void Init() {
+
+		// x by z size
+		//4 x 4 / 2 x 2 
+		// -2 - 2 x y / -1 0 1  
+		int xNeg =-( xSize / 2);
+		int xPos = xSize / 2;
+
+		int zNeg = -(zSize / 2);
+		int zPos = zSize / 2;
+
+		for (int i = xNeg ; i < xPos; i ++)
+		{
+			for (int j = zNeg; j<zPos;j++)
+			{
+				this->cube = new CubeObject(shader,textureSlot);
+				this->cube->TranslateMatrixLeftAndRight((float)i);
+				this->cube->TranslateMatrixNearAndFar((float)j);
+				this->cube->TranslateMatrixUpAndDown((float)-1.f);
+				cubes.push_back(cube);
+				
+			}
+		}
+		std::cout << "Cubes size for terrain : " << cubes.size();
+	}
+
+	void Draw(Renderer * renderer) {
+		for (auto& cube : cubes)
+		{
+			
+			cube->Draw(renderer);
+		}
+	}
+	void Update() {
+		for (auto &cube : cubes)
+		{
+			cube->RotateXAxis(10);
+		}
+	}
+};
+

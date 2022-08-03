@@ -22,9 +22,13 @@ Window::Window()
 
 	printStatistcs();
 
-	//glfwSetFramebufferSizeCallback(this->window, frameBufferSizeCallBack);
+	glfwSetFramebufferSizeCallback(this->window, frameBufferSizeCallBack);
 
 };
+
+void Window::setViewPort() {
+	glViewport(0, 0, windows_width, windows_height);
+}
 
 void Window::Shutdown() {
 	glfwDestroyWindow(this->window);
@@ -67,3 +71,4 @@ bool Window::windowShouldClose() {
 void Window::swapBuffers() {
 	glfwSwapBuffers(this->window);
 }
+
