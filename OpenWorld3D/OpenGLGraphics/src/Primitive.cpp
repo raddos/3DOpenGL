@@ -141,6 +141,8 @@ Cube::Cube() : Primitive()
 		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.4f,0.1f,0.0f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, -1.f, 0.f),
 
 	};
+	
+
 	unsigned nrOfVertices = sizeof(vertices) / sizeof(Vertex);
 
 	GLuint indices[] =
@@ -159,6 +161,8 @@ Cube::Cube() : Primitive()
 		20,23,22,22,21,20
 
 	};
+
+
 	unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
 
 	this->set(vertices, nrOfVertices, indices, nrOfIndices);

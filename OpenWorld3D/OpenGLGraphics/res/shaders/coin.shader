@@ -29,7 +29,7 @@ void main()
 #shader fragment
 #version 440 core  
 
-layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 color;
 
 in vec3 vertex_position;
 in vec3 vertex_color;
@@ -37,7 +37,7 @@ in vec2 vertex_texcoord;
 in vec3 vertex_normal;
 
 uniform vec4 uniformColor;
-//layout(binding = 3) uniform sampler2D uniformTexture;
+layout(binding = 2) uniform sampler2D uniformTexture;
 uniform vec3 lightPos;
 uniform vec3 camPosition;
 

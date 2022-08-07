@@ -28,8 +28,6 @@ public:
 class CubeObject : public Object
 {
 protected:
-	//for filelocation
-	const char* shaderFilepath;
 	//Shape
 	Primitive* cube;
 	//Basic attributes
@@ -55,6 +53,8 @@ public:
 
 	bool setPlay;
 
+	CubeObject() = default;
+
 	CubeObject(Shader * shader,int textureSlot) :Object(), shader(shader){
 		initcounter();
 		this->setPlay = false;
@@ -62,14 +62,15 @@ public:
 		InitDefaultParameters(textureSlot);
 		UnbindAll();
 	}
+	
+
 	~CubeObject()
 	{
 		delete va;
 		delete vb;
-		delete ib;
+    	delete ib;
+    	delete shader;
 		delete cube;
-		delete shader;
-		delete shaderFilepath;
 	}
 
 	virtual void InitAttributes() {
@@ -89,9 +90,29 @@ public:
 		
 	};
 
+	void Delete() {
+		shader->Bind();
+		this->modelMatrix = glm::mat4(0.f);
+		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
+		shader->Unbind();
+	}
+
 	void RotateXAxis(float degree) {
 		shader-> Bind();
 		this->modelMatrix = glm::rotate(modelMatrix, glm::radians(degree), glm::vec3(1.f, 0, 0));
+		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
+		shader->Unbind();
+	}
+
+	void RotateYAxis(float degree) {
+		shader->Bind();
+		this->modelMatrix = glm::rotate(modelMatrix, glm::radians(degree), glm::vec3(0, 1.0f, 0));
+		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
+		shader->Unbind();
+	}
+	void RotateZAxis(float degree) {
+		shader->Bind();
+		this->modelMatrix = glm::rotate(modelMatrix, glm::radians(degree), glm::vec3(0, 0, 1.f));
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
 	}
@@ -115,7 +136,6 @@ public:
 	void TranslateMatrixLeftAndRight(float x) {
 		shader->Bind();
 		this->modelMatrix = glm::translate(modelMatrix, glm::vec3(x, 0.f, 0.f));
-
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
 	};
@@ -146,7 +166,6 @@ private:
 	void InitDefaultParameters(int textureSlot) {
 
 		shader->Bind();
-		std::cout << to_string(modelMatrix);
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->SetUniformMat4f("u_ViewMatrix", viewMatrix);
 		shader->SetUniformMat4f("u_PerspectiveProjection", perpectiveProj);
@@ -164,72 +183,48 @@ private:
 
 
 };
-
-class TerrainMesh {
+// Texture slot 2 shader//
+// making terrain 
+// Texture 
+class Terrain
+{
 private:
-	Shader* shader;
 	int xSize;
 	int zSize;
 protected:
-
-	CubeObject* cube;
 	int textureSlot;
-	std::vector<CubeObject*> cubes;
-
 public:
+	std::vector<CubeObject> tiles;
+	Shader* shader;
 
-	TerrainMesh(Shader * shader,
+	Terrain(Shader * shader,
 		int xSize, int zSize,int textureSlot) :shader(shader), zSize(zSize), xSize(xSize),textureSlot(textureSlot)
 	{
-		Init();
 
+		Init();
+		
 	};
 
-	~TerrainMesh() {
-		for (auto* cube : cubes) {
-			delete cube;
-		}
-		this->cubes.empty();
+	~Terrain() {
+		tiles.clear();
+		
 	}
-
-	void Init() {
-
-		// x by z size
-		//4 x 4 / 2 x 2 
-		// -2 - 2 x y / -1 0 1  
-		int xNeg =-( xSize / 2);
-		int xPos = xSize / 2;
-
-		int zNeg = -(zSize / 2);
-		int zPos = zSize / 2;
-
-		for (int i = xNeg ; i < xPos; i ++)
-		{
-			for (int j = zNeg; j<zPos;j++)
-			{
-				this->cube = new CubeObject(shader,textureSlot);
-				this->cube->TranslateMatrixLeftAndRight((float)i);
-				this->cube->TranslateMatrixNearAndFar((float)j);
-				this->cube->TranslateMatrixUpAndDown((float)-1.f);
-				cubes.push_back(cube);
-				
-			}
+	void Init() 
+	{
+		for (int i = 0; i < 5; i++) {
+			CubeObject* cube = new CubeObject(shader, textureSlot);
+			cube->TranslateMatrixLeftAndRight((float)i);
+			tiles.push_back(*cube);
 		}
-		std::cout << "Cubes size for terrain : " << cubes.size();
 	}
 
 	void Draw(Renderer * renderer) {
-		for (auto& cube : cubes)
+		for (auto& tile : tiles)
 		{
-			
-			cube->Draw(renderer);
+			tile.Draw(renderer);
 		}
 	}
 	void Update() {
-		for (auto &cube : cubes)
-		{
-			cube->RotateXAxis(10);
-		}
 	}
 };
 

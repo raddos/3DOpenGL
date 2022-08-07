@@ -28,24 +28,30 @@ void Test::Play() const
 	Renderer renderer;
 
 	//Terrain init
-	Shader *terrainShader=new Shader("res/shaders/terrain.shader");
-	TerrainMesh* terrain = new TerrainMesh(terrainShader, 8, 8,0);
+	Shader terrainShader("res/shaders/terrain.shader");
 	Texture terrainTexture("res/textures/TextureDirt.jpg");
+ 	Terrain terrain(&terrainShader, 8, 8, 0);
+	
 	//Player init 
 	Shader *playerShader= new Shader("res/shaders/player.shader");
-	CubeObject* player= new CubeObject(playerShader, 1);
 	Texture playerTexture("res/textures/SwordImage.png");
+	CubeObject* player= new CubeObject(playerShader, 1);
 
+	//Coin init
+	Shader* coinShader = new Shader("res/shaders/player.shader");
+	Texture coinTexture("res/textures/coin.png");
+	CubeObject* coin = new CubeObject(coinShader, 2);
 
 	//Binding textures
 	terrainTexture.BindTextureSlot();
 	playerTexture.BindTextureSlot();
-	
+	coinTexture.BindTextureSlot();
 
 	//Gui
 	Gui GUI;
 	GUI.Init(win.getWindowsPointer());
 
+	coin->TranslateMatrixLeftAndRight(1.f);
 
 	while (!win.windowShouldClose())
 	{
@@ -62,16 +68,12 @@ void Test::Play() const
 		//Rendering commands here
 		renderer.Clear();
 		//Terrain & SkyBox
-		terrain->Draw(&renderer);
-		
-
-		//Player & Coins
+        terrain.Draw(&renderer);
+		//terrain->Update();
+		//Player& Coins
 		player->Draw(&renderer);
-
-
-
+		coin->Draw(&renderer);
 		//Enemies & Score
-		
 		
 		//Gui
 		GUI.Render();
@@ -96,6 +98,6 @@ void playerInput(GLFWwindow* win,CubeObject * cube) {
 	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
 		cube->TranslateMatrixLeftAndRight(+0.1f);
 	if (glfwGetKey(win, GLFW_KEY_Z) == GLFW_PRESS)
-		delete[] cube;
+		cube->Delete();
 }
 

@@ -1,38 +1,4 @@
-﻿  glad.c
-  AIController.cpp
-  Camera.cpp
-  Enemy.cpp
-  Entity.cpp
-  Game.cpp
-  Player.cpp
-  PlayerController.cpp
-  PlayerInput.cpp
-  Application.cpp
-  Gui.cpp
-  glm.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  stb_image.cpp
-  IndexBuffer.cpp
-  Generating Code...
-  Compiling...
-  Object.cpp
-  Primitive.cpp
-  Renderer.cpp
-  Shader.cpp
-  Sound.cpp
-  Test.cpp
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(78,1): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(80,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(192,20): warning C4834: discarding return value of function with 'nodiscard' attribute
-  Texture.cpp
-  VertexBuffer.cpp
-  VertexArray.cpp
-  Window.cpp
-  Generating Code...
+﻿  Test.cpp
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(79,1): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(81,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
   OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\x64\Debug\OpenGLGraphics.exe
