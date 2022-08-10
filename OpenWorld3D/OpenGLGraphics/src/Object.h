@@ -42,21 +42,11 @@ protected:
 	glm::mat4 viewMatrix = ViewMatrix();
 	glm::mat4 perpectiveProj = PerspectiveProj();
 
-
-
+	int textureSlot;
 public:
-	static int initcounter() {
-		static int k = 0;
-		k += 1;
-		return k;
-	};
-
 	bool setPlay;
-
-	CubeObject() = default;
-
-	CubeObject(Shader * shader,int textureSlot) :Object(), shader(shader){
-		initcounter();
+	CubeObject(Shader * shader,int textureSlot) :Object(), shader(shader),textureSlot(textureSlot) {
+		
 		this->setPlay = false;
 		InitAttributes();
 		InitDefaultParameters(textureSlot);
@@ -79,15 +69,11 @@ public:
 		vb = new VertexBuffer(cube->getNumberOfVertices(), cube->getVertices());  // buffer vertices data 
 		va->AddBuffer(*this->vb); // adding to pointers to data
 		ib = new IndexBuffer(cube->getNumberOfIndices(), cube->getIndices()); // given idices 
-
 	}
 	void Draw(Renderer * renderer) {
 
 		renderer->Draw(*this->va, *this->ib, *this->shader);
 
-	}
-	void Update() {
-		
 	};
 
 	void Delete() {
@@ -147,6 +133,12 @@ public:
 		shader->Unbind();
 	};
 
+	void Update() {
+
+		//shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
+	}
+
+private:
 
 	void UnbindAll() {
 		va->Unbind();
@@ -161,8 +153,6 @@ public:
 		ib->Bind();
 		shader->Bind();
 	}
-private:
-
 	void InitDefaultParameters(int textureSlot) {
 
 		shader->Bind();
@@ -174,7 +164,6 @@ private:
 		glm::vec3 camPosition(0.f, 0.0f, 1.f);
 
 		shader->SetUniform3fv("lightPos", glm::value_ptr(lightPos));
-		shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
 
 		//adds to shader
 		shader->SetUniform1i("uniformTexture", textureSlot);
@@ -194,15 +183,14 @@ private:
 protected:
 	int textureSlot;
 public:
-	std::vector<CubeObject> tiles;
-	Shader* shader;
-
+	std::vector<CubeObject*> tiles;
+	Shader * shader;
 	Terrain(Shader * shader,
 		int xSize, int zSize,int textureSlot) :shader(shader), zSize(zSize), xSize(xSize),textureSlot(textureSlot)
 	{
 
 		Init();
-		
+		std::cout << tiles.size();
 	};
 
 	~Terrain() {
@@ -211,17 +199,23 @@ public:
 	}
 	void Init() 
 	{
-		for (int i = 0; i < 5; i++) {
-			CubeObject* cube = new CubeObject(shader, textureSlot);
-			cube->TranslateMatrixLeftAndRight((float)i);
-			tiles.push_back(*cube);
+		for (int i = -(xSize/2); i < (xSize/2); i++)
+		{
+			for (int j = -(zSize/2); j < zSize/2; j++) {
+				this->shader = new Shader(shader->getShaderFilePath());
+				CubeObject* cube = new CubeObject(shader, textureSlot);
+				cube->TranslateMatrixLeftAndRight((float)i);
+				cube->TranslateMatrixNearAndFar((float)j);
+				cube->TranslateMatrixUpAndDown((float)-1.f);
+				tiles.push_back(cube);
+			}
 		}
 	}
 
 	void Draw(Renderer * renderer) {
 		for (auto& tile : tiles)
 		{
-			tile.Draw(renderer);
+			tile->Draw(renderer);
 		}
 	}
 	void Update() {

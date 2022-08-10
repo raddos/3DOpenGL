@@ -29,6 +29,7 @@ glm::mat4 ViewMatrix() {
 	return ViewMatrix;
 }
 
+
 glm::mat4 PerspectiveProj() {
 	//Projection for 3d
 	glm::mat4 perspectiveProj(1.0f);

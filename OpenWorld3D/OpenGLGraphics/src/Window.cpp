@@ -8,6 +8,16 @@ Window::Window()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
+	//delta
+	this->curtime = 0.f;
+	this->deltatime = 0.f;
+	this->lasttime = 0.f;
+	//mouse
+	this->xpos, ypos = 0, 0;
+	this->xoffset, yoffset = 0, 0;
+	this-> lastxpos, lastypos = 0, 0;
+	this->firstmouse = true;
+	
 	this->window = glfwCreateWindow(windows_width, windows_height, title, NULL, NULL);
 	if (this->window == nullptr) {
 		std::cout << "Window init not working!" << std::endl;
@@ -23,6 +33,7 @@ Window::Window()
 	printStatistcs();
 
 	glfwSetFramebufferSizeCallback(this->window, frameBufferSizeCallBack);
+
 
 };
 

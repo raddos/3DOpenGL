@@ -20,7 +20,9 @@ private:
 public:
 	Shader(const std::string& filepath);
 	~Shader();
-
+	inline std::string getShaderFilePath()  const {
+		return filepath;
+	}
 	void Bind() const;
 	void Unbind() const;
 	//Set uniforms 
