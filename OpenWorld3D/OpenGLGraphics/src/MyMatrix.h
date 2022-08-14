@@ -8,10 +8,11 @@ glm::mat4 ModelMatrix() {
 	glm::vec3 scale(1.f);
 	//setting matrix ( INNIT )
 	// Indentity matrix needed for manipulation
-	glm::mat4 modelMatrix(1.f);
+	glm::mat4 modelMatrix(1.f); 
+	
 	modelMatrix = glm::translate(modelMatrix, position);
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, -4.f));
-
+	
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(35.f), glm::vec3(1.0f, 0.0f, 0.0f));
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(10.f), glm::vec3(0.0f, 1.0f, 0.0f));
 	modelMatrix = glm::rotate(modelMatrix, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));

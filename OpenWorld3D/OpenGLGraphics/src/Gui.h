@@ -10,11 +10,17 @@ class Gui {
 	const char* glsl_version = "#version 130";
 	float imGuiSizeWidth = 1000;
 	float imGuiSizeHeight = 200;
+    float score;
+	float health;
+	float time;
 public:
 
 	void Init(GLFWwindow* window);
 	virtual void Update();
+	void UpdateScore();
 	void Render();
 	void Shutdown();
 
+
 };
+

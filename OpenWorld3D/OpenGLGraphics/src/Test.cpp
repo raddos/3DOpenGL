@@ -30,7 +30,7 @@ void Test::Play() const
 	//Terrain init
 	Shader terrainShader("res/shaders/terrain.shader");
 	Texture terrainTexture("res/textures/TextureDirt.jpg");
- 	Terrain terrain(&terrainShader, 16, 16, 0);
+ 	Terrain terrain(&terrainShader, 32,32, 0);
 	
 	//Player init 
 	Shader *playerShader= new Shader("res/shaders/player.shader");
@@ -77,7 +77,11 @@ void Test::Play() const
 		player->Draw(&renderer);
 		coin->Draw(&renderer);
 		//Enemies & Score
-		
+		if (player->CheckPos(*coin)) {
+			GUI.UpdateScore();
+
+		}
+
 		//Gui
 		GUI.Render();
 		

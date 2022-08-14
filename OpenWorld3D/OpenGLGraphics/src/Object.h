@@ -12,7 +12,6 @@
 #include <glm/gtx/string_cast.hpp>
 #include "MyMatrix.h"
 
-
 class Object {
 
 public:
@@ -37,29 +36,32 @@ protected:
 	VertexBuffer* vb;
 	IndexBuffer* ib;
 
+	glm::vec3 positions = glm::vec3(0.0f, 0.0f, -4.0f);
+	glm::vec3 scale = glm::vec3(0.5f);
 	//Default attributes
 	glm::mat4 modelMatrix = ModelMatrix();
 	glm::mat4 viewMatrix = ViewMatrix();
 	glm::mat4 perpectiveProj = PerspectiveProj();
 
+
+	float* data;
 	int textureSlot;
 public:
 	bool setPlay;
-	CubeObject(Shader * shader,int textureSlot) :Object(), shader(shader),textureSlot(textureSlot) {
-		
+	CubeObject(Shader* shader, int textureSlot) :Object(), shader(shader), textureSlot(textureSlot) {
 		this->setPlay = false;
 		InitAttributes();
 		InitDefaultParameters(textureSlot);
 		UnbindAll();
 	}
-	
+
 
 	~CubeObject()
 	{
 		delete va;
 		delete vb;
-    	delete ib;
-    	delete shader;
+		delete ib;
+		delete shader;
 		delete cube;
 	}
 
@@ -70,7 +72,7 @@ public:
 		va->AddBuffer(*this->vb); // adding to pointers to data
 		ib = new IndexBuffer(cube->getNumberOfIndices(), cube->getIndices()); // given idices 
 	}
-	void Draw(Renderer * renderer) {
+	void Draw(Renderer* renderer) {
 
 		renderer->Draw(*this->va, *this->ib, *this->shader);
 
@@ -84,7 +86,7 @@ public:
 	}
 
 	void RotateXAxis(float degree) {
-		shader-> Bind();
+		shader->Bind();
 		this->modelMatrix = glm::rotate(modelMatrix, glm::radians(degree), glm::vec3(1.f, 0, 0));
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
@@ -109,12 +111,12 @@ public:
 		TranslateMatrixNearAndFar(-2.f);
 		TranslateMatrixUpAndDown(0.f);
 	}
-	
+
 	//between -1 and +1
 	void TranslateMatrixUpAndDown(float y) {
 		shader->Bind();
 		this->modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, y, 0.0f));
-
+	    this->positions = glm::vec3(this->positions.x, this->positions.y + y, this->positions.z);
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
 	};
@@ -122,13 +124,14 @@ public:
 	void TranslateMatrixLeftAndRight(float x) {
 		shader->Bind();
 		this->modelMatrix = glm::translate(modelMatrix, glm::vec3(x, 0.f, 0.f));
+		this->positions = glm::vec3(this->positions.x+x, this->positions.y, this->positions.z);
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
 	};
 	void TranslateMatrixNearAndFar(float z) {
 		shader->Bind();
 		this->modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, z));
-
+		this->positions = glm::vec3(this->positions.x, this->positions.y, this->positions.z + z);
 		shader->SetUniformMat4f("u_ModelMatrix", modelMatrix);
 		shader->Unbind();
 	};
@@ -137,7 +140,28 @@ public:
 
 		//shader->SetUniform3fv("camPosition", glm::value_ptr(camPosition));
 	}
+	// Collision
+	bool CheckPos(CubeObject & cb)
+	{
 
+		if (glm::abs(this->positions[0] - cb.positions[0]) < this->scale[0] + cb.scale[0])
+		{
+			//check the Y axis
+			if (glm::abs(this->positions[1] - cb.positions[1]) < this->scale[1] + cb.scale[1])
+			{
+
+				//check the Z axis
+				if (glm::abs(this->positions[2] - cb.positions[2]) < this->scale[2] + cb.scale[2])
+				{
+					cb.Delete();
+					return true;
+				}
+			}
+		}
+		std::cout << "Miss";
+		return false;
+			
+	}
 private:
 
 	void UnbindAll() {
@@ -169,8 +193,6 @@ private:
 		shader->SetUniform1i("uniformTexture", textureSlot);
 		shader->Unbind();
 	}
-
-
 };
 // Texture slot 2 shader//
 // making terrain 
