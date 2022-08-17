@@ -12,16 +12,15 @@ class Window {
 
 	GLFWwindow* window;
 
-
-	//delta time
-	float deltatime, curtime, lasttime;
-
 	//mouse input
 	float xpos, ypos;
 	float xoffset, yoffset;
 	float lastxpos, lastypos;
 	bool firstmouse;
 public:
+	//delta time
+	float deltaTime, curTime, lastTime;
+	
 	Window();
 
 	void Shutdown();

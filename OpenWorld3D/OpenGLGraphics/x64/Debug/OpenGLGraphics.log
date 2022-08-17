@@ -1,4 +1,8 @@
-﻿  Test.cpp
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(71,1): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Object.h(73,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+﻿  PrimitiveObjects.cpp
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\PrimitiveObjects.cpp(158,73): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\PrimitiveObjects.cpp(160,70): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+  Terrain.cpp
+  Test.cpp
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(66,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\x64\Debug\OpenGLGraphics.exe

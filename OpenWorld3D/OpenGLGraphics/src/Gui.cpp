@@ -5,20 +5,12 @@ void Colors()
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Colors[ImGuiCol_WindowBg] = ImColor(50, 16, 16, 50);
 	style.Colors[ImGuiCol_Border] = ImColor(20, 20, 1, 50);
-	
 
 };
 
-void Size()
-{
-	
-}
-
 void Gui::Init(GLFWwindow* window) 
 {
-	this->health = 0;
 	this->score = 0;
-	this->time = 0;
 	ImGui::CreateContext();
 	IMGUI_CHECKVERSION();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -40,10 +32,7 @@ void Gui::Update()
 
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 	{
-
-		this->health = 3;
-		this->score = 0;
-		this->time = 0;
+		int health = 10;
 		static float f = 0.0f;
 		static int counter = 0;
 		ImGui::Begin("Game",0,ImGuiWindowFlags_NoTitleBar);                          // Create a window called "Hello, world!" and append into it.
@@ -53,16 +42,28 @@ void Gui::Update()
 
 		ImGui::Text("Game");               // Display some text (you can use a format strings too)
 		
-		ImGui::Text("Health %d",health);
-		ImGui::Text("Score %d", score);
-		ImGui::Text("Time %d",score);
-		//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("Health: %d",health);
+		ImGui::Text("Score: %d", score);
+		ImGui::Text("Time: %0.2f",time);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		
 		ImGui::End();
 	}
 };
 
+void Gui::UpdateScore()
+{
+	this->score++;
+}
 
+void Gui::UpdateTime(float* time) {
+	this->time = *time;
+
+}
+
+void Gui::UpdateHealth() {
+
+}
 void Gui::Render()
 {
 	ImGui::Render();
@@ -74,10 +75,3 @@ void Gui::Shutdown()
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 };
-
-void Gui::UpdateScore()
-{
-//	printf("Collided ++ ");
-
-	this->score++;
-}

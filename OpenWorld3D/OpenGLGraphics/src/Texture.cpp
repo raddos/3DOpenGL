@@ -22,12 +22,9 @@ Texture::Texture(const std::string& filepath):filepath(filepath),localBuffer(nul
 
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
-	if (localBuffer) {
+	if (localBuffer) 
 		stbi_image_free(localBuffer);
-		printf("Texture stbi image is free for next image");
-	}
-	else
-		printf("Texture stbi image is not free for next image");
+	
 }
 
 Texture::~Texture()

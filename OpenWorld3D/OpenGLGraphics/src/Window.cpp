@@ -9,9 +9,9 @@ Window::Window()
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
 	//delta
-	this->curtime = 0.f;
-	this->deltatime = 0.f;
-	this->lasttime = 0.f;
+	this->curTime = 0.f;
+	this->deltaTime = 0.f;
+	this->lastTime = 0.f;
 	//mouse
 	this->xpos, ypos = 0, 0;
 	this->xoffset, yoffset = 0, 0;
@@ -82,4 +82,3 @@ bool Window::windowShouldClose() {
 void Window::swapBuffers() {
 	glfwSwapBuffers(this->window);
 }
-

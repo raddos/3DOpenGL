@@ -1,5 +1,9 @@
-#pragma once
-
+#ifndef MYMATRIX_HEADER
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+#define MYMATRIX_HEADER
 glm::mat4 ModelMatrix() {
 	// Attributes
 	glm::vec3 position(0.f);
@@ -40,3 +44,6 @@ glm::mat4 PerspectiveProj() {
 	perspectiveProj = glm::perspective(glm::radians(FOV), static_cast<float>(1280) / 720, nearPlane, farPlane);
 	return perspectiveProj;
 }
+
+
+#endif MYMATRIX_HEADER

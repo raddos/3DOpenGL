@@ -1,11 +1,13 @@
 #include "Test.h"
 #include "Primitive.h"
-#include "Object.h"
 #include "Sound.h"
 #include "Gui.h"
 #include "Window.h"
+#include "Texture.h"
+#include "Terrain.h"
+#include "PrimitiveObjects.h"
 
-void playerInput(GLFWwindow* win, CubeObject* cube);
+void playerInput(GLFWwindow* win, CubeObject* cube,float deltaTime);
 
 Test::Test() 
 {
@@ -37,6 +39,7 @@ void Test::Play() const
 	Texture playerTexture("res/textures/SwordImage.png");
 	CubeObject* player= new CubeObject(playerShader, 1);
 
+	player->speed = 25.f;
 	//Coin init
 	Shader* coinShader = new Shader("res/shaders/player.shader");
 	Texture coinTexture("res/textures/coin.png");
@@ -53,18 +56,25 @@ void Test::Play() const
 	Gui GUI;
 	GUI.Init(win.getWindowsPointer());
 
-	coin->TranslateMatrixLeftAndRight(2.f);
+	coin->TranslateMatrixLeftAndRight(2.f,1.0f);
+
+	bool flagAliveForCoin = true;
 
 	while (!win.windowShouldClose())
 	{
+		
+		win.curTime = glfwGetTime();
+		win.deltaTime = win.curTime - win.lastTime;
 
+	 
 		//Update
 		glfwPollEvents();
 		GUI.Update();
 		//Input
 		win.processInputForWindow();
+		
 		//Player Input
-		playerInput(win.getWindowsPointer(), player);
+		playerInput(win.getWindowsPointer(), player, win.deltaTime);
 
 
 		//Rendering commands here
@@ -72,19 +82,30 @@ void Test::Play() const
 		//Terrain & SkyBox
 		terrain.Draw(&renderer);
 
-		//terrain->Update();
 		//Player& Coins
 		player->Draw(&renderer);
-		coin->Draw(&renderer);
+
+		//Check objects with shaders 
+		if(flagAliveForCoin)
+			coin->Draw(&renderer);
+		
+		GUI.UpdateTime(&win.curTime);
 		//Enemies & Score
 		if (player->CheckPos(*coin)) {
+			//check pos
 			GUI.UpdateScore();
-
+			flagAliveForCoin = false;
 		}
-
+		if (flagAliveForCoin) {
+		//	std::cout << "Player position :  " << glm::to_string(player->positions) << std::endl;
+		//	std::cout << "Coin Posisiton : " << glm::to_string(coin->positions) << std::endl;
+		}
 		//Gui
 		GUI.Render();
 		
+
+
+		win.lastTime = win.curTime;
 		win.swapBuffers();
 	}
 
@@ -94,19 +115,18 @@ void Test::Play() const
 }
 
 
-void playerInput(GLFWwindow* win,CubeObject * cube) 
+void playerInput(GLFWwindow* win,CubeObject * cube,float deltaTime) 
 {
 	if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		cube->TranslateMatrixNearAndFar(-0.1f);
-	}
+		cube->TranslateMatrixNearAndFar(-0.1f,deltaTime);
 	if(glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS)
-		cube->TranslateMatrixNearAndFar(+0.1f);
+		cube->TranslateMatrixNearAndFar(+0.1f, deltaTime);
 	if(glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS)
-		cube->TranslateMatrixLeftAndRight(-0.1f);
+		cube->TranslateMatrixLeftAndRight(-0.1f, deltaTime);
 	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
-		cube->TranslateMatrixLeftAndRight(+0.1f);
-	if (glfwGetKey(win, GLFW_KEY_Z) == GLFW_PRESS)
-		cube->Delete();
+		cube->TranslateMatrixLeftAndRight(+0.1f, deltaTime);
+	//Sprint
+	if (glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		cube->speed = 100.f;
 }
 
