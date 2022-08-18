@@ -8,15 +8,22 @@ Terrain class PrimitiveObject class and Object class
 ->Added Gui display on score,time and health
 ->Fixed collision and translation with coin object
 */
-TODO:
+Done last time 8/18/2022
 Rewrite ViewMatrix to Camera component thats added to test as seperate instance of object
 Making New Shader for Camera class
 Making mouse callbacks for camera movements
 
+TODO:
+Optimization of camera, setting enums for movement (BACKWARD,FORWARD,LEFT/RIGHT)
+Setting up terrain and movement to be updated over in rendering loop , camera following object
+setting up timer , addding life - game loop
+
+
+//Future
 Making Spawn,Spawntime, GameLoop,Gui Window (Play,GameOver);
 Making GameLoop;
 //Future
-TODO:: making adding model/mesh class for models //ASIMP
+TODO:: making adding model mesh class for models //ASIMP
 
 #####
 

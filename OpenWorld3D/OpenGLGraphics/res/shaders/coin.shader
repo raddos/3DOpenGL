@@ -12,9 +12,9 @@ out vec2 vertex_texcoord;
 out vec3 vertex_normal;
 
 //uniform mat4 u_MatrixViewProjection; 
-uniform mat4 u_ModelMatrix;
-//uniform mat4 u_ViewMatrix;
-//uniform mat4 u_PerspectiveProjection;
+uniform mat4 u_ModelMatrix
+uniform mat4 u_ViewMatrix;
+uniform mat4 u_PerspectiveProjection;
 
 void main()  
 {  
@@ -22,8 +22,8 @@ void main()
 	vertex_color = colorcoord;
 	vertex_texcoord = texcoord;
 	vertex_normal = mat3(u_ModelMatrix) * normal;
-	//u_PerspectiveProjection* u_ViewMatrix*
-	gl_Position = u_ModelMatrix * vec4(position, 1.f);
+	
+	gl_Position =  u_PerspectiveProjection * u_ViewMatrix * u_ModelMatrix * vec4(position, 1.f);
 };
 
 #shader fragment

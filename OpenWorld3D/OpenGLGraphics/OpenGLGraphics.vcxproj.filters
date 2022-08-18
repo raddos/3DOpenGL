@@ -66,7 +66,7 @@
     <ClCompile Include="src\Helper\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gmsrc\Camera.cpp">
+    <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Test.cpp">
@@ -533,6 +533,8 @@
     <None Include="res\shaders\terrain.shader" />
     <None Include="res\shaders\player.shader" />
     <None Include="res\shaders\coin.shader" />
+    <None Include="res\shaders\Sword.shader" />
+    <None Include="res\shaders\Cube.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1435,7 +1437,7 @@
     <ClInclude Include="src\Helper\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gmsrc\Camera.h">
+    <ClInclude Include="src\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Vertex.h">

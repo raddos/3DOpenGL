@@ -6,9 +6,10 @@
 #include "Texture.h"
 #include "Terrain.h"
 #include "PrimitiveObjects.h"
+#include "Camera.h"
 
 void playerInput(GLFWwindow* win, CubeObject* cube,float deltaTime);
-
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 Test::Test() 
 {
 
@@ -19,12 +20,21 @@ Test::~Test()
 
 }
 
+bool firstMouse = true;
+float yaw = -90.0f;	
+float pitch = 0.0f;
+float lastX = static_cast<float>(1280 / 2);
+float lastY = static_cast<float>(720/ 2);
+float fov = 45.0f;
+	
+//sound
 void Test::Play() const
 {
+
 	//Windows
 	Window win;
-
-	//sound
+	glfwSetCursorPosCallback(win.getWindowsPointer(), mouse_callback);
+	//win.SetInputMode();
 	Sound s;
 	s.testSound();
 	Renderer renderer;
@@ -45,7 +55,12 @@ void Test::Play() const
 	Texture coinTexture("res/textures/coin.png");
 	CubeObject* coin = new CubeObject(coinShader, 2);
 
+
+
 	//Enemy 
+
+
+
 
 	//Binding textures
 	terrainTexture.BindTextureSlot();
@@ -66,16 +81,17 @@ void Test::Play() const
 		win.curTime = glfwGetTime();
 		win.deltaTime = win.curTime - win.lastTime;
 
-	 
 		//Update
 		glfwPollEvents();
 		GUI.Update();
+		
+		//Updates camera viewMatrix;
+		Camera::getInstance().Update(win.deltaTime);
 		//Input
 		win.processInputForWindow();
 		
 		//Player Input
 		playerInput(win.getWindowsPointer(), player, win.deltaTime);
-
 
 		//Rendering commands here
 		renderer.Clear();
@@ -84,6 +100,7 @@ void Test::Play() const
 
 		//Player& Coins
 		player->Draw(&renderer);
+		player->Update(win.deltaTime);
 
 		//Check objects with shaders 
 		if(flagAliveForCoin)
@@ -96,15 +113,9 @@ void Test::Play() const
 			GUI.UpdateScore();
 			flagAliveForCoin = false;
 		}
-		if (flagAliveForCoin) {
-		//	std::cout << "Player position :  " << glm::to_string(player->positions) << std::endl;
-		//	std::cout << "Coin Posisiton : " << glm::to_string(coin->positions) << std::endl;
-		}
 		//Gui
 		GUI.Render();
 		
-
-
 		win.lastTime = win.curTime;
 		win.swapBuffers();
 	}
@@ -117,8 +128,10 @@ void Test::Play() const
 
 void playerInput(GLFWwindow* win,CubeObject * cube,float deltaTime) 
 {
-	if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS)
-		cube->TranslateMatrixNearAndFar(-0.1f,deltaTime);
+	if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS) {
+		cube->TranslateMatrixNearAndFar(-0.1f, deltaTime);
+		Camera::getInstance().SetCameraPosition( Camera::getInstance().GetCameraFront(), deltaTime);
+	}
 	if(glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS)
 		cube->TranslateMatrixNearAndFar(+0.1f, deltaTime);
 	if(glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS)
@@ -130,3 +143,45 @@ void playerInput(GLFWwindow* win,CubeObject * cube,float deltaTime)
 		cube->speed = 100.f;
 }
 
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="window"></param>
+	/// <param name="xpos"></param>
+	/// ->needs improvment since yaw and pitch cant be over +;
+	/// ->settings for FPS need to be set
+	/// -> widnow/camera callback to be put (inside a class ) 
+	/// <param name="ypos"></param>
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	Camera::getInstance().SetCameraFront(glm::normalize(direction),1.f);
+
+}

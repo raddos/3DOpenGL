@@ -5,7 +5,6 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "Primitive.h"
-
 //Shader
 #include "Shader.h"
 

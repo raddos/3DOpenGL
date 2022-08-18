@@ -24,15 +24,6 @@ glm::mat4 ModelMatrix() {
 	return modelMatrix;
 }
 
-glm::mat4 ViewMatrix() {
-	//Camera
-	glm::mat4 ViewMatrix(1.f);
-	glm::vec3 camPosition(0.f, 0.0f, 2.f);
-	glm::vec3 lookUpWorld(0.f, 1.0f, 0.0f);
-	glm::vec3 camFront(0.0f, 0.0, -1.f);
-	ViewMatrix = glm::lookAt(camPosition, camPosition + camFront, lookUpWorld);
-	return ViewMatrix;
-}
 
 
 glm::mat4 PerspectiveProj() {

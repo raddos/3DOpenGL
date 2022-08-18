@@ -13,10 +13,11 @@ Window::Window()
 	this->deltaTime = 0.f;
 	this->lastTime = 0.f;
 	//mouse
-	this->xpos, ypos = 0, 0;
-	this->xoffset, yoffset = 0, 0;
-	this-> lastxpos, lastypos = 0, 0;
-	this->firstmouse = true;
+	this->yaw = -90.f;
+	this->pitch = 0.f;
+	this->lastx = static_cast<float>(this->windows_width / 2);
+	this->lasty = static_cast<float>(this->windows_height / 2);
+	this->firstmouse = false;
 	
 	this->window = glfwCreateWindow(windows_width, windows_height, title, NULL, NULL);
 	if (this->window == nullptr) {
@@ -33,7 +34,6 @@ Window::Window()
 	printStatistcs();
 
 	glfwSetFramebufferSizeCallback(this->window, frameBufferSizeCallBack);
-
 
 };
 
@@ -82,3 +82,4 @@ bool Window::windowShouldClose() {
 void Window::swapBuffers() {
 	glfwSwapBuffers(this->window);
 }
+
