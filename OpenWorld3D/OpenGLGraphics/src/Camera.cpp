@@ -39,6 +39,17 @@ void Camera::SetCameraFront(glm::vec3 cameraFront, float deltaTime)
 {
 	this->cameraFront = cameraFront;
 }
+
+glm::vec3 Camera::GetCameraRight()const
+{
+	return cameraRight;
+}
+void Camera::SetCameraRight(glm::vec3 camerRight, float deltaTime)
+{
+	this->cameraRight = cameraRight;
+}
+
+
 #pragma endregion
 
 //ViewMatrix
@@ -65,7 +76,7 @@ void Camera::InitBasicVec() {
 //Defs
 void Camera::InitCameraVec() 
 {
-	this->cameraPos = glm::vec3(0.f, 0.0f, 3.f);
+	this->cameraPos = glm::vec3(0.f, 0.0f, 1.f);
 	this->cameraTarget = glm::vec3(0.f);
 	this->cameraDirection = glm::normalize(glm::vec3(cameraPos - cameraTarget));
 
@@ -76,9 +87,7 @@ void Camera::InitCameraVec()
 
 void Camera::InitMatrix()
 {
-	//Basic camera
-	//this->viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
-	//Walking -> glfw input on cameraPos;
+	
 	this->viewMatrix = glm::lookAt(cameraPos, cameraPos + cameraFront, up);
 
 }

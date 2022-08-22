@@ -45,9 +45,14 @@ public:
 	glm::vec3 GetCameraFront()const;
 	void SetCameraFront(glm::vec3 cameraFront, float deltaTime);
 
+	//for mouse rotation
+	glm::vec3 GetCameraRight()const;
+	void SetCameraRight(glm::vec3 cameraRight, float deltaTime);
+
 	//ViewMatrix
 	glm::mat4 GetViewMatrix() const;
 	void SetViewMatrix(glm::mat4 viewMatrix);
+
 
 	void Update(float deltaTime);
 

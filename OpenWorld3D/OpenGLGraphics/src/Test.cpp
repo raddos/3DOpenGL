@@ -34,7 +34,9 @@ void Test::Play() const
 	//Windows
 	Window win;
 	glfwSetCursorPosCallback(win.getWindowsPointer(), mouse_callback);
-	//win.SetInputMode();
+	win.SetInputMode();
+
+
 	Sound s;
 	s.testSound();
 	Renderer renderer;
@@ -77,7 +79,6 @@ void Test::Play() const
 
 	while (!win.windowShouldClose())
 	{
-		
 		win.curTime = glfwGetTime();
 		win.deltaTime = win.curTime - win.lastTime;
 
@@ -97,15 +98,16 @@ void Test::Play() const
 		renderer.Clear();
 		//Terrain & SkyBox
 		terrain.Draw(&renderer);
-
+		terrain.Update(win.deltaTime);
 		//Player& Coins
 		player->Draw(&renderer);
 		player->Update(win.deltaTime);
 
 		//Check objects with shaders 
-		if(flagAliveForCoin)
+		if (flagAliveForCoin) {
 			coin->Draw(&renderer);
-		
+			coin->Update(win.deltaTime);
+		}
 		GUI.UpdateTime(&win.curTime);
 		//Enemies & Score
 		if (player->CheckPos(*coin)) {
@@ -132,12 +134,18 @@ void playerInput(GLFWwindow* win,CubeObject * cube,float deltaTime)
 		cube->TranslateMatrixNearAndFar(-0.1f, deltaTime);
 		Camera::getInstance().SetCameraPosition( Camera::getInstance().GetCameraFront(), deltaTime);
 	}
-	if(glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS) {
 		cube->TranslateMatrixNearAndFar(+0.1f, deltaTime);
-	if(glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS)
+		Camera::getInstance().SetCameraPosition(- Camera::getInstance().GetCameraFront(), deltaTime);
+	}
+	if (glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS) {
 		cube->TranslateMatrixLeftAndRight(-0.1f, deltaTime);
-	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
+		Camera::getInstance().SetCameraPosition(-Camera::getInstance().GetCameraRight(), deltaTime);
+	}
+	if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS) {
 		cube->TranslateMatrixLeftAndRight(+0.1f, deltaTime);
+		Camera::getInstance().SetCameraPosition(Camera::getInstance().GetCameraRight(), deltaTime);
+	}
 	//Sprint
 	if (glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		cube->speed = 100.f;
@@ -145,15 +153,6 @@ void playerInput(GLFWwindow* win,CubeObject * cube,float deltaTime)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="window"></param>
-	/// <param name="xpos"></param>
-	/// ->needs improvment since yaw and pitch cant be over +;
-	/// ->settings for FPS need to be set
-	/// -> widnow/camera callback to be put (inside a class ) 
-	/// <param name="ypos"></param>
 	if (firstMouse)
 	{
 		lastX = xpos;

@@ -1,4 +1,6 @@
 #include "Terrain.h"
+#include "Camera.h"
+
 Terrain::Terrain(Shader* shader,
 	int xSize, int zSize, int textureSlot) :shader(shader), 
 	zSize(zSize), xSize(xSize), textureSlot(textureSlot)
@@ -20,6 +22,7 @@ void Terrain::Init()
 	{
 		for (int j = -(zSize / 2); j < zSize / 2; j++) {
 			this->shader = new Shader(shader->getShaderFilePath());
+			shaders.push_back(shader);
 			CubeObject* cube = new CubeObject(shader, textureSlot);
 			cube->TranslateMatrixLeftAndRight((float)i, 1.f);
 			cube->TranslateMatrixNearAndFar((float)j, 1.f);
@@ -35,5 +38,10 @@ void Terrain::Draw(Renderer* renderer) {
 		tile->Draw(renderer);
 	}
 }
-void Terrain::Update() {
+void Terrain::Update(float deltaTime)
+{
+	for (auto& tile : tiles) 
+	{
+		tile->Update(deltaTime);
+	}
 }

@@ -1,9 +1,9 @@
 ﻿  Test.cpp
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(81,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(82,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(158,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(159,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(160,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(163,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(164,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(165,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(165,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(166,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\OpenGLGraphics\src\Test.cpp(167,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   OpenGLGraphics.vcxproj -> C:\Users\Windows10 Home\Documents\GitHub\3DOpenGL\OpenWorld3D\x64\Debug\OpenGLGraphics.exe
